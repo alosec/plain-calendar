@@ -1,77 +1,72 @@
 # Current Work - Plain Calendar
 
-**Status**: Ready for Self-Driven Implementation
+**Status**: Phase 1 Complete, Phase 2 In Progress
 **Last Updated**: December 1, 2025
+**GitHub**: https://github.com/alosec/plain-calendar
 
-## Current State
-Project is fully planned and tracked in both Beads (local) and Linear (ABG-personal project). Ready for autonomous agent implementation.
+## Completed (Phase 1 Foundation)
+
+✅ **Monorepo Setup** (ABG-58)
+- pnpm workspaces configured
+- packages/core and packages/react created
+
+✅ **Git Configuration** (ABG-57)
+- .gitignore for node_modules, dist, coverage
+- Repository pushed to GitHub
+
+✅ **Vite Library Mode** (ABG-63)
+- Core and React packages configured for library builds
+- ESM output with source maps
+
+✅ **Vitest Testing** (ABG-62)
+- 52 tests passing in core package
+- Test infrastructure ready
+
+✅ **Core Types** (ABG-61)
+- CalendarEvent, DateRange, TimeRange
+- View types, hook return types
+- CalendarConfig with defaults
+
+✅ **timeUtils** (ABG-60) - 20 tests
+- parseTimeToMinutes, parseEventTimeToMinutes
+- formatHourLabel, formatDisplayTime
+- getTimeDuration, isTimeInRange
+
+✅ **dateUtils** (ABG-59) - 32 tests
+- addDays, addMonths, startOfDay, startOfWeek
+- isSameDay, isToday, isWeekend
+- formatScheduledTime, toDateString
+
+✅ **useCalendarState** (ABG-72)
+- Calendar navigation state management
+- Supports day/week/month/agenda views
+- Configurable week start and days to show
+
+## Next Up (Phase 2 Hooks)
+
+Priority order for remaining hooks:
+
+1. **useTimeRange** (calendar-smz/ABG-70) - Time range calculations
+2. **useEventLayout** (calendar-09j/ABG-71) - Event positioning algorithm
+3. **useEventsMap** (calendar-7w9) - Events by date mapping
+4. **useTimeAxis** (calendar-ctq) - Time axis labels
+5. **useGridLines** (calendar-0x2/ABG-65) - Grid line generation
+6. **useCurrentTimeIndicator** (calendar-8qv/ABG-64) - "Now" line
+7. **useDateCache** (calendar-ffl) - Date object caching
+8. **useTimeProportionalLayout** (calendar-2f8/ABG-69) - Y-position from time
 
 ## Issue Tracking
-- **Beads**: 39 issues with `calendar-` prefix (local tracking)
-- **Linear**: Project `plain-calendar` with issues ABG-55 through ABG-94
-- **Ongoing Issue**: ABG-55 tracks overall development progress
 
-## Implementation Phases
+- **Beads**: `cd ~/code/plain-calendar && bd ready`
+- **Linear**: Project `plain-calendar` in ABG-personal
 
-### Phase 1 - Foundation (P0-P1): 8 issues
-Infrastructure and core setup - START HERE
-- Monorepo structure (pnpm workspaces)
-- Git configuration
-- Vite + Vitest setup
-- Core TypeScript types
-- Date/time utilities extraction
+## Quick Commands
 
-### Phase 2 - Core Hooks (P2): 10 issues
-State management and layout algorithms
-- useCalendarState, useTimeRange, useEventLayout
-- useEventsMap, useDateCache
-- useTimeAxis, useGridLines, useCurrentTimeIndicator
-- useTimeProportionalLayout
-- **NEW**: Vite/React demo repo (calendar-cb9 / ABG-94)
-
-### Phase 3 - Components & Demo (P3): 10 issues
-React components and demo application
-- Timeline, WeekView, Calendar, EventBlock components
-- Astro demo app with all views
-- AuthGate with dev bypass
-- Mock data generation
-
-### Phase 4 - Testing & Polish (P4): 11 issues
-Quality and distribution
-- E2E tests for all views
-- GitHub Actions CI/CD
-- Documentation (README, CONTRIBUTING)
-- npm publishing configuration
-
-## Key Decisions
-- **Name**: `plain-calendar` (npm package)
-- **Architecture**: Headless-first (hooks + unstyled components)
-- **TypeScript**: Only (no JS distribution)
-- **React**: 19+ (peer dependency)
-- **Build**: Vite (library mode)
-- **Tests**: Vitest (unit) + Playwright (E2E)
-- **Demo**: Astro app with dev flag auth bypass
-- **Pattern**: TanStack Table + Radix UI inspired
-- **Monorepo**: pnpm workspaces (packages/core, packages/react, demo, tests)
-
-## Build Order (Dependencies)
-1. `calendar-uzt` - Monorepo setup (unblocks everything)
-2. `calendar-57z` - Git config (unblocks CI/CD)
-3. `calendar-b88` + `calendar-yfm` - Vite + Vitest (unblocks implementation)
-4. `calendar-ki7` - Core types (unblocks hooks)
-5. `calendar-0vu` + `calendar-3t7` - Utils (unblocks hooks)
-6. P2 hooks (unblocks components)
-7. P3 components + demo
-8. P4 testing + polish
-
-## For Autonomous Agent
-1. Run `bd ready` to see unblocked issues
-2. Work through Phase 1 first (P0-P1 issues)
-3. Update issue status with `bd update <id> --status in_progress`
-4. Close completed issues with `bd close <id> -r "reason"`
-5. Test each component before moving on
-6. Commit frequently with meaningful messages
-
-## Relationship to Other Projects
-- **PediCalendar** (pedicab512): Source of extracted patterns
-- **FreeCalendar**: Future first production consumer
+```bash
+cd ~/code/plain-calendar
+pnpm test           # Run all tests
+pnpm build          # Build all packages
+bd ready            # See next tasks
+bd update <id> --status in_progress
+bd close <id> -r "reason"
+```
