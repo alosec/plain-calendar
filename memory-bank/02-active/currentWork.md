@@ -1,72 +1,92 @@
 # Current Work - Plain Calendar
 
-**Status**: Phase 1 Complete, Phase 2 In Progress
+**Status**: Phase 1-3 Complete, Phase 4 In Progress
 **Last Updated**: December 1, 2025
 **GitHub**: https://github.com/alosec/plain-calendar
 
-## Completed (Phase 1 Foundation)
+## Completed
 
-✅ **Monorepo Setup** (ABG-58)
-- pnpm workspaces configured
-- packages/core and packages/react created
+### Phase 1: Foundation ✅
+- Monorepo with pnpm workspaces (packages/core, packages/react)
+- Vite library mode + Vitest testing
+- Core TypeScript types
+- timeUtils and dateUtils with 52 tests
 
-✅ **Git Configuration** (ABG-57)
-- .gitignore for node_modules, dist, coverage
-- Repository pushed to GitHub
+### Phase 2: Hooks ✅
+- useCalendarState - Calendar navigation state
+- useTimeRange - Visible time range calculation
+- useEventLayout - Event positioning with overlap handling
+- useEventsMap - Events grouped by date
+- useTimeAxis - Time axis labels (12h/24h)
+- useGridLines - Grid line generation
+- useCurrentTimeIndicator - "Now" line tracking
+- useDateCache - Date object caching (LRU)
+- useTimeProportionalLayout - Time to Y-position conversion
+- 19 hook tests (71 total)
 
-✅ **Vite Library Mode** (ABG-63)
-- Core and React packages configured for library builds
-- ESM output with source maps
+### Phase 3: Components ✅
+- EventBlock - Headless event display
+- Timeline - Day timeline view
+- WeekView - 7-day week layout
+- Calendar - Month grid view
+- Mock data generators
 
-✅ **Vitest Testing** (ABG-62)
-- 52 tests passing in core package
-- Test infrastructure ready
+## Current Focus
 
-✅ **Core Types** (ABG-61)
-- CalendarEvent, DateRange, TimeRange
-- View types, hook return types
-- CalendarConfig with defaults
+### Demo Site ✅ DEPLOYED
+**Live**: https://plain-cal-demo.pages.dev
 
-✅ **timeUtils** (ABG-60) - 20 tests
-- parseTimeToMinutes, parseEventTimeToMinutes
-- formatHourLabel, formatDisplayTime
-- getTimeDuration, isTimeInRange
+**Deployment Pattern** (manual, not git-linked):
+```bash
+cd ~/code/plain-cal-demo
+npm run build
+wrangler pages deploy dist/ --project-name=plain-cal-demo
+```
 
-✅ **dateUtils** (ABG-59) - 32 tests
-- addDays, addMonths, startOfDay, startOfWeek
-- isSameDay, isToday, isWeekend
-- formatScheduledTime, toDateString
+**Features**:
+- Day (Timeline), Week, Month views
+- Navigation (prev/next/today)
+- Event click handling
+- Realistic mock schedule data
+- Responsive, clean styling
 
-✅ **useCalendarState** (ABG-72)
-- Calendar navigation state management
-- Supports day/week/month/agenda views
-- Configurable week start and days to show
+## Remaining Issues
 
-## Next Up (Phase 2 Hooks)
+### Phase 4: Polish (P3-P4)
+- Astro demo app (calendar-2kk)
+- Demo pages for all views (calendar-2nc)
+- Playwright E2E infrastructure (calendar-3g1)
+- Test fixtures (calendar-a3t)
+- AuthGate component (calendar-k6a)
 
-Priority order for remaining hooks:
-
-1. **useTimeRange** (calendar-smz/ABG-70) - Time range calculations
-2. **useEventLayout** (calendar-09j/ABG-71) - Event positioning algorithm
-3. **useEventsMap** (calendar-7w9) - Events by date mapping
-4. **useTimeAxis** (calendar-ctq) - Time axis labels
-5. **useGridLines** (calendar-0x2/ABG-65) - Grid line generation
-6. **useCurrentTimeIndicator** (calendar-8qv/ABG-64) - "Now" line
-7. **useDateCache** (calendar-ffl) - Date object caching
-8. **useTimeProportionalLayout** (calendar-2f8/ABG-69) - Y-position from time
-
-## Issue Tracking
-
-- **Beads**: `cd ~/code/plain-calendar && bd ready`
-- **Linear**: Project `plain-calendar` in ABG-personal
+### Phase 4: CI/CD & Docs (P4)
+- GitHub Actions CI (calendar-1h1)
+- GitHub Actions E2E (calendar-8ul)
+- README docs (calendar-9vh)
+- CONTRIBUTING.md (calendar-075)
+- npm publishing config (calendar-mxn)
+- E2E tests (calendar-7hg, calendar-cpq, calendar-upu, calendar-9rm, calendar-86s, calendar-xbi)
 
 ## Quick Commands
 
 ```bash
+# Development
 cd ~/code/plain-calendar
-pnpm test           # Run all tests
+pnpm test           # Run all tests (71 passing)
 pnpm build          # Build all packages
+
+# Demo deployment
+cd ~/code/plain-cal-demo
+npm run build
+wrangler pages deploy dist/ --project-name=plain-cal-demo
+
+# Issue tracking
+cd ~/code/plain-calendar
 bd ready            # See next tasks
 bd update <id> --status in_progress
 bd close <id> -r "reason"
 ```
+
+## Build Outputs
+- @plain-calendar/core: 8.4kb (gzip: 2.2kb)
+- @plain-calendar/react: 71.5kb (gzip: 15.5kb)
