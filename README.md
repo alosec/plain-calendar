@@ -70,10 +70,47 @@ function MyCalendar() {
 | `useCalendarState` | Calendar navigation and date state |
 | `useTimeRange` | Calculate visible time range |
 | `useEventLayout` | Position events with overlap handling |
+| `useEventStack` | **NEW** Priority-based event stacking |
 | `useEventsMap` | Group events by date |
 | `useTimeAxis` | Generate time axis labels |
 | `useGridLines` | Generate grid lines |
 | `useCurrentTimeIndicator` | Track "now" line position |
+
+## Event Stacking
+
+Stack overlapping events based on priority:
+
+```tsx
+import { useEventStack, StackedEventGroup } from '@plain-calendar/react'
+
+function MyTimeline({ events }) {
+  const { stackedEvents, maxStackDepth, hasStacks } = useEventStack(events, {
+    offsetPx: 6,       // Visual offset per stack level
+    maxStack: 5,       // Maximum stack depth
+    getPriority: (e) => e.data?.priority ?? 999,
+  })
+
+  return (
+    <div className="timeline">
+      {stackedEvents.map((se) => (
+        <div
+          key={se.event.id}
+          style={{
+            marginLeft: se.stackOffset,
+            marginTop: se.stackOffset,
+            zIndex: se.stackLayer,
+          }}
+        >
+          {se.event.title}
+          {se.stackSize > 1 && ` (+${se.stackSize - 1} more)`}
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+Lower priority numbers = base layer. Higher priority events stack on top with visual offsets.
 
 ## Components
 
@@ -83,6 +120,7 @@ function MyCalendar() {
 | `WeekView` | 7-day week grid |
 | `Calendar` | Month grid view |
 | `EventBlock` | Positioned event display |
+| `StackedEventGroup` | **NEW** Container for stacked events |
 
 All components are **headless** - they provide structure and logic, you provide the styling via render props.
 
@@ -106,8 +144,9 @@ pnpm build
 **Active Development** - Core functionality complete, working on polish and publishing.
 
 - ✅ Core utilities and types
-- ✅ React hooks (9 hooks)
-- ✅ React components (4 components)
+- ✅ React hooks (10 hooks)
+- ✅ React components (5 components)
+- ✅ Event stacking algorithm
 - ✅ Demo site deployed
 - 🔲 npm publishing
 - 🔲 E2E tests
