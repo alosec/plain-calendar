@@ -1,9 +1,10 @@
 # Current Work - Plain Calendar
 
-**Status**: Phases 1-3 Complete, Demo Deployed
-**Last Updated**: December 1, 2025
+**Status**: Event Stack Feature Complete, Ready for PR
+**Last Updated**: December 6, 2025
 **GitHub**: https://github.com/alosec/plain-calendar
 **Live Demo**: https://plain-cal-demo.pages.dev
+**Branch**: feature/event-stack
 
 ## Project Summary
 
@@ -17,10 +18,11 @@ plain-calendar is a headless React calendar component library - the "TanStack Ta
 - Core TypeScript types
 - timeUtils and dateUtils (52 tests)
 
-**Phase 2: Hooks (9 hooks)**
+**Phase 2: Hooks (10 hooks)**
 - useCalendarState - Navigation and date state
 - useTimeRange - Visible time range calculation
 - useEventLayout - Event positioning with overlap handling
+- useEventStack - **NEW** Priority-based event stacking
 - useEventsMap - Events grouped by date
 - useTimeAxis - Time axis labels (12h/24h)
 - useGridLines - Grid line generation
@@ -28,55 +30,66 @@ plain-calendar is a headless React calendar component library - the "TanStack Ta
 - useDateCache - Date object caching (LRU)
 - useTimeProportionalLayout - Time to Y-position
 
-**Phase 3: Components (4 components)**
+**Phase 3: Components (5 components)**
 - EventBlock - Headless event display
 - Timeline - Day timeline view
 - WeekView - 7-day week layout
 - Calendar - Month grid view
+- StackedEventGroup - **NEW** Container for stacked events
+
+**Phase 4: Event Stacking (NEW)**
+- stackUtils.ts - Core stacking algorithm
+  - eventsOverlap() - Detect overlapping events
+  - groupOverlappingEvents() - Cluster overlapping events
+  - calculateStackLayers() - Assign layers by priority
+  - stackEvents() - Main API function
+- StackedEvent type with stackLayer, stackOffset, parent, children
+- 22 tests for stacking algorithm
+- 8 tests for useEventStack hook
 
 **Demo Site**
 - Deployed to Cloudflare Pages
 - Day/Week/Month views with navigation
-- Realistic mock schedule data
-- Screenshot captured for README
+- Screenshot: https://screenshots-5wx.pages.dev/plain-cal-demo-before.png
 
 ### Test Coverage
-- 71 passing tests (52 core + 19 react)
+- 101 passing tests (74 core + 27 react)
 
 ### Build Outputs
-- @plain-calendar/core: 8.4kb (gzip: 2.2kb)
-- @plain-calendar/react: 71.5kb (gzip: 15.5kb)
+- @plain-calendar/core: 11.4kb (gzip: 3.0kb) - includes stack utils
+- @plain-calendar/react: 73kb (gzip: 15.9kb)
 
-## Remaining Work (Phase 4)
+## Current Branch
 
-### High Priority
-- npm publishing configuration (calendar-mxn)
-- README documentation polish (calendar-9vh) ✅ Done
+`feature/event-stack` is ready for PR with:
+- Core stacking algorithm
+- React hook and component
+- Full test coverage
+- Updated documentation
 
-### Medium Priority
-- GitHub Actions CI pipeline (calendar-1h1)
-- Astro demo app (calendar-2kk)
+## Related Issues
 
-### Lower Priority
-- Playwright E2E tests (calendar-3g1, calendar-7hg, etc.)
-- CONTRIBUTING.md (calendar-075)
+- GitHub: https://github.com/alosec/plain-calendar/issues/1
+- Linear: ABG-169
+
+## Next Steps
+
+1. Create PR for event-stack branch
+2. Publish to npm (need package.json config)
+3. Update pedicalendar to use published package
 
 ## Quick Commands
 
 ```bash
 # Development
-cd ~/code/plain-calendar
-pnpm test           # Run all tests (71 passing)
+cd ~/code/plain-calendar-event-stack
+pnpm test           # Run all tests (101 passing)
 pnpm build          # Build all packages
 
 # Demo deployment
 cd ~/code/plain-cal-demo
 npm run build
 wrangler pages deploy dist/ --project-name=plain-cal-demo
-
-# Issue tracking
-cd ~/code/plain-calendar
-bd ready            # See next tasks
 ```
 
 ## Key Decisions Made
@@ -86,3 +99,4 @@ bd ready            # See next tasks
 3. **No external deps**: Only React as peer dependency
 4. **TypeScript only**: No JavaScript distribution
 5. **Extracted patterns**: Based on production PediCalendar code
+6. **Priority-based stacking**: Lower priority number = base layer (matches venue priority)
