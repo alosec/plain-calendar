@@ -120,6 +120,42 @@ export interface UseEventLayoutReturn<T extends CalendarEvent = CalendarEvent> {
   hasOverlaps: boolean;
 }
 
+// ============================================================================
+// Event Stack Types
+// ============================================================================
+
+/** Event with stacking information for priority-based visual layout */
+export interface StackedEvent<T extends CalendarEvent = CalendarEvent> {
+  event: T;
+  /** Stack depth (0 = base/highest priority, higher = more nested) */
+  stackLayer: number;
+  /** Pixel offset for visual nesting */
+  stackOffset: number;
+  /** Total events in this stack group */
+  stackSize: number;
+  /** Events stacked on top of this one */
+  children: StackedEvent<T>[];
+  /** Parent event this is stacked within (null for base layer) */
+  parent: StackedEvent<T> | null;
+}
+
+/** Options for event stacking algorithm */
+export interface StackOptions {
+  /** Pixels to offset each stack level (default: 8) */
+  offsetPx?: number;
+  /** Maximum stack depth to display (default: 5) */
+  maxStack?: number;
+  /** Priority accessor function (default: event.data?.priority or 999) */
+  getPriority?: (event: CalendarEvent) => number;
+}
+
+/** useEventStack return type */
+export interface UseEventStackReturn<T extends CalendarEvent = CalendarEvent> {
+  stackedEvents: StackedEvent<T>[];
+  maxStackDepth: number;
+  hasStacks: boolean;
+}
+
 /** useCurrentTimeIndicator return type */
 export interface UseCurrentTimeIndicatorReturn {
   position: number; // percentage
