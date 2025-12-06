@@ -10,3 +10,6 @@ export type { WeekViewProps } from './WeekView';
 
 export { Calendar } from './Calendar';
 export type { CalendarProps } from './Calendar';
+
+export { StackedEventGroup, getStackedEventStyle } from './StackedEventGroup';
+export type { StackedEventGroupProps } from './StackedEventGroup';

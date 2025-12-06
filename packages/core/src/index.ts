@@ -4,3 +4,4 @@
 export * from './types';
 export * from './timeUtils';
 export * from './dateUtils';
+export * from './stackUtils';

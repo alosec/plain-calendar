@@ -24,6 +24,9 @@ export { useDateCache } from './hooks/useDateCache';
 
 export { useTimeProportionalLayout } from './hooks/useTimeProportionalLayout';
 
+export { useEventStack } from './hooks/useEventStack';
+export type { UseEventStackOptions } from './hooks/useEventStack';
+
 // Components
 export * from './components';
 
