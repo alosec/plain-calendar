@@ -1,7 +1,7 @@
 # Current Work - Plain Calendar
 
-**Status**: Phases 1-3 Complete, Demo Deployed
-**Last Updated**: December 1, 2025
+**Status**: Phases 1-4 Complete, Event Stack Available
+**Last Updated**: December 7, 2025
 **GitHub**: https://github.com/alosec/plain-calendar
 **Live Demo**: https://plain-cal-demo.pages.dev
 
@@ -15,12 +15,13 @@ plain-calendar is a headless React calendar component library - the "TanStack Ta
 - pnpm monorepo (packages/core, packages/react)
 - Vite library mode + Vitest testing
 - Core TypeScript types
-- timeUtils and dateUtils (52 tests)
+- timeUtils and dateUtils
 
-**Phase 2: Hooks (9 hooks)**
+**Phase 2: Hooks (10 hooks)**
 - useCalendarState - Navigation and date state
 - useTimeRange - Visible time range calculation
-- useEventLayout - Event positioning with overlap handling
+- useEventLayout - Event positioning with overlap handling (columns)
+- useEventStack - Priority-based visual stacking (NEW)
 - useEventsMap - Events grouped by date
 - useTimeAxis - Time axis labels (12h/24h)
 - useGridLines - Grid line generation
@@ -34,55 +35,24 @@ plain-calendar is a headless React calendar component library - the "TanStack Ta
 - WeekView - 7-day week layout
 - Calendar - Month grid view
 
-**Demo Site**
-- Deployed to Cloudflare Pages
-- Day/Week/Month views with navigation
-- Realistic mock schedule data
-- Screenshot captured for README
-
-### Test Coverage
-- 71 passing tests (52 core + 19 react)
+**Phase 4: Event Stacking (Dec 7, 2025)**
+- stackUtils.ts - Pure stacking algorithm
+- findOverlapGroups, calculateContainment, getStackInsets
+- useEventStack hook wrapping algorithm
+- 90 tests total (71 core + 19 react)
 
 ### Build Outputs
-- @plain-calendar/core: 8.4kb (gzip: 2.2kb)
-- @plain-calendar/react: 71.5kb (gzip: 15.5kb)
+- @plain-calendar/core: 12.8kb (gzip: 3.3kb)
+- @plain-calendar/react: 71.9kb (gzip: 15.7kb)
 
-## Remaining Work (Phase 4)
+## Usage Notes
 
-### High Priority
-- npm publishing configuration (calendar-mxn)
-- README documentation polish (calendar-9vh) ✅ Done
-
-### Medium Priority
-- GitHub Actions CI pipeline (calendar-1h1)
-- Astro demo app (calendar-2kk)
-
-### Lower Priority
-- Playwright E2E tests (calendar-3g1, calendar-7hg, etc.)
-- CONTRIBUTING.md (calendar-075)
+**useEventStack** - Available but not currently used in pedicalendar. Visual containment stacking was explored but column-based layout (useEventLayout) provides cleaner UX. Stacking preserved for future use cases.
 
 ## Quick Commands
 
 ```bash
-# Development
 cd ~/code/plain-calendar
-pnpm test           # Run all tests (71 passing)
+pnpm test           # Run all tests (90 passing)
 pnpm build          # Build all packages
-
-# Demo deployment
-cd ~/code/plain-cal-demo
-npm run build
-wrangler pages deploy dist/ --project-name=plain-cal-demo
-
-# Issue tracking
-cd ~/code/plain-calendar
-bd ready            # See next tasks
 ```
-
-## Key Decisions Made
-
-1. **Headless-first**: All components use render props for full customization
-2. **Monorepo**: Separate core (pure TS) from react packages
-3. **No external deps**: Only React as peer dependency
-4. **TypeScript only**: No JavaScript distribution
-5. **Extracted patterns**: Based on production PediCalendar code
