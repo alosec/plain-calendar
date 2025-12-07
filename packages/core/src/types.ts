@@ -120,6 +120,60 @@ export interface UseEventLayoutReturn<T extends CalendarEvent = CalendarEvent> {
   hasOverlaps: boolean;
 }
 
+// ============================================================================
+// Event Stacking Types
+// ============================================================================
+
+/** Visual insets for stacked events */
+export interface StackInsets {
+  left: number;   // pixels
+  right: number;  // pixels
+}
+
+/** Event with stacking metadata */
+export interface StackedEvent<T extends CalendarEvent = CalendarEvent> {
+  event: T;
+  /** Layer in the stack (0 = base/highest priority) */
+  layer: number;
+  /** Parent event ID if nested inside another */
+  parentId: string | null;
+  /** Child event IDs contained within this event */
+  childIds: string[];
+  /** Visual insets from container edges */
+  insets: StackInsets;
+  /** Position as percentage (same as PositionedEvent) */
+  top: number;
+  height: number;
+}
+
+/** Group of overlapping events */
+export interface StackGroup<T extends CalendarEvent = CalendarEvent> {
+  events: T[];
+  timeRange: { start: Date; end: Date };
+}
+
+/** useEventStack options */
+export interface UseEventStackOptions<T extends CalendarEvent = CalendarEvent> {
+  /** Function to extract priority from event (lower = higher priority) */
+  getPriority: (event: T) => number;
+  /** Pixels to inset per layer (default: 8) */
+  insetPx?: number;
+  /** Maximum nesting depth (default: 5) */
+  maxDepth?: number;
+  /** Start hour for position calculation */
+  startHour?: number;
+  /** End hour for position calculation */
+  endHour?: number;
+}
+
+/** useEventStack return type */
+export interface UseEventStackReturn<T extends CalendarEvent = CalendarEvent> {
+  stackedEvents: StackedEvent<T>[];
+  stackGroups: StackGroup<T>[];
+  maxDepth: number;
+  hasStacks: boolean;
+}
+
 /** useCurrentTimeIndicator return type */
 export interface UseCurrentTimeIndicatorReturn {
   position: number; // percentage

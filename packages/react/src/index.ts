@@ -12,6 +12,8 @@ export { useTimeRange } from './hooks/useTimeRange';
 
 export { useEventLayout } from './hooks/useEventLayout';
 
+export { useEventStack } from './hooks/useEventStack';
+
 export { useEventsMap, getEventsForDate, getEventsForRange } from './hooks/useEventsMap';
 
 export { useTimeAxis } from './hooks/useTimeAxis';
